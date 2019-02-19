@@ -6,6 +6,8 @@
 namespace Templates\MiPHP;
 global $Mi;
 
+if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
+
 class Template extends \Extensions\Mi\FrontEnd\Template
 {
     public function __construct($Mi)

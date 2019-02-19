@@ -10,6 +10,8 @@ Author URI: mehmetizmirlioglu.com.tr
 
 namespace Extensions\Mi\FrontEnd;
 
+if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
+
 class Template extends \Extensions\Prepare
 {
     public $dir;

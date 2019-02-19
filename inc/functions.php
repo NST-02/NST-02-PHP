@@ -1,6 +1,6 @@
 <?php
 
-if($Mi == '') header('Location: /');
+if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 
 error_reporting(E_ALL ^ E_NOTICE ^E_WARNING);
 
