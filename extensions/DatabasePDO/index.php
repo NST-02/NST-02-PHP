@@ -32,5 +32,7 @@ class Index extends \Extensions\Prepare
         @$db->query("SET character_set_connection = 'UTF8'");
         @$db->query("SET character_set_client = 'UTF8'");
         @$db->query("SET character_set_results = 'UTF8'");
+
+        return $db;
     }
 }

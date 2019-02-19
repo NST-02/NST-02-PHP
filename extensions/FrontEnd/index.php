@@ -29,4 +29,12 @@ class Index extends \Extensions\Prepare
             include($file);
         }
     }
+
+    public function getTemplateClasses($folder)
+    {
+        foreach (glob("{$folder}/*.php") as $filename)
+        {
+            include($filename);
+        }
+    }
 }

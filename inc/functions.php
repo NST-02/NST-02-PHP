@@ -73,7 +73,6 @@ class Mi
         } else {
             $this->errorPage(array('<b>\Extensions\Mi\FrontEnd\Index</b> Extension is Not Found'));
         }
-
     }
 
     public function errorPage($error)
