@@ -209,6 +209,8 @@ class Mi
     public function pageDetect()
     {
         $s = ltrim($_SERVER['REQUEST_URI'], '/');
+        $s = explode('?',$s);
+        $s = $s[0];
         $s = array_filter(explode('/',$s));
         return $s;
     }
