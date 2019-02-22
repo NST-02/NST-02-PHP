@@ -322,19 +322,19 @@ class Mi
         return $browser;
     }
 
-    function firstLetterUppercaseLetterTR($str)
+    public function firstLetterUppercaseLetterTR($str)
     {
         $str = str_replace(array('i', 'ı', 'ü', 'ğ', 'ş', 'ö', 'ç'), array('İ', 'I', 'Ü', 'Ğ', 'Ş', 'Ö', 'Ç'), $str);
 
         return mb_strtoupper($str,"utf-8");
     }
 
-    function firstLetterUppercaseLetter($str)
+    public function firstLetterUppercaseLetter($str)
     {
         return strtoupper($str);
     }
 
-    function upperCase($str)
+    public function upperCase($str)
     {
         return mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
     }
