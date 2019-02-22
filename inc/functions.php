@@ -12,7 +12,7 @@ $classesDir = array (
     __DIR__.'/../extensions/'
 );
 
-function include_extensions($folder)
+function includeExtensions($folder)
 {
     foreach (glob("{$folder}/*.php") as $filename)
     {
@@ -26,7 +26,7 @@ function include_extensions($folder)
     }
 }
 
-include_extensions(__DIR__.'/../extensions');
+includeExtensions(__DIR__.'/../extensions');
 
 // Main Class
 
@@ -215,9 +215,9 @@ class Mi
         return $s;
     }
 
-    public function baseUrl($dosya = '')
+    public function baseUrl($file = '')
     {
-        return $this->site.'/'.$dosya;
+        return $this->site.'/'.$file;
     }
 
     public function ipDetect()
@@ -249,23 +249,23 @@ class Mi
 
     }
 
-    public function dateFormatTR($tarih, $sekil = '1')
+    public function dateFormatTR($date, $version = '1')
     {
-        $ing_aylar = array("January","February","March","May","April","June","July","August","September","October","November","December");
-        $tr_aylar = array("Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık");
-        $ing_gunler = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-        $tr_gunler = array("Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar");
+        $eng_monthnames = array("January","February","March","May","April","June","July","August","September","October","November","December");
+        $tr_monthnames = array("Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık");
+        $eng_daynames = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+        $tr_daynames = array("Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar");
 
-        if($sekil == 1) return date("d.m.Y",strtotime($tarih));
-        if($sekil == 2) return date("d.m.Y H:i",strtotime($tarih));
-        if($sekil == 3)
+        if($version == 1) return date("d.m.Y",strtotime($date));
+        if($version == 2) return date("d.m.Y H:i",strtotime($date));
+        if($version == 3)
         {
-            $tarih = date("d F Y H:i",strtotime($tarih));
+            $date = date("d F Y H:i",strtotime($date));
 
-            $tarih = str_replace($ing_aylar,$tr_aylar,$tarih);
-            $tarih = str_replace($ing_gunler,$tr_gunler,$tarih);
+            $date = str_replace($eng_monthnames,$tr_monthnames,$date);
+            $date = str_replace($eng_daynames,$tr_daynames,$date);
 
-            return $tarih;
+            return $date;
         }
     }
 
@@ -291,19 +291,19 @@ class Mi
 
     public function osDetect()
     {
-        $tespit=$_SERVER['HTTP_USER_AGENT'];
+        $user_agent=$_SERVER['HTTP_USER_AGENT'];
 
-        if(stristr($tespit,"Windows 95")) { $os="Windows 95"; }
-        elseif(stristr($tespit,"Windows 98")) { $os="Windows 98"; }
-        elseif(stristr($tespit,"Windows NT 5.0")) { $os="Windows 2000"; }
-        elseif(stristr($tespit,"Windows NT 5.1")) { $os="Windows XP"; }
-        elseif(stristr($tespit,"Windows NT 6.0")) { $os="Windows Vista"; }
-        elseif(stristr($tespit,"Windows NT 6.1")) { $os="Windows 7"; }
-        elseif(stristr($tespit,"Windows NT 6.2")) { $os="Windows 8"; }
-        elseif(stristr($tespit,"Windows NT 6.3")) { $os="Windows 8.1"; }
-        elseif(stristr($tespit,"Windows NT 10")) { $os="Windows 10"; }
-        elseif(stristr($tespit,"Mac")) { $os="Mac"; }
-        elseif(stristr($tespit,"Linux")) { $os="Linux"; }
+        if(stristr($user_agent,"Windows 95")) { $os="Windows 95"; }
+        elseif(stristr($user_agent,"Windows 98")) { $os="Windows 98"; }
+        elseif(stristr($user_agent,"Windows NT 5.0")) { $os="Windows 2000"; }
+        elseif(stristr($user_agent,"Windows NT 5.1")) { $os="Windows XP"; }
+        elseif(stristr($user_agent,"Windows NT 6.0")) { $os="Windows Vista"; }
+        elseif(stristr($user_agent,"Windows NT 6.1")) { $os="Windows 7"; }
+        elseif(stristr($user_agent,"Windows NT 6.2")) { $os="Windows 8"; }
+        elseif(stristr($user_agent,"Windows NT 6.3")) { $os="Windows 8.1"; }
+        elseif(stristr($user_agent,"Windows NT 10")) { $os="Windows 10"; }
+        elseif(stristr($user_agent,"Mac")) { $os="Mac"; }
+        elseif(stristr($user_agent,"Linux")) { $os="Linux"; }
         else { $os = "Not Found"; }
 
         return $os;
@@ -311,66 +311,32 @@ class Mi
 
     public function browserDetect()
     {
-        $tespit2=$_SERVER['HTTP_USER_AGENT'];
-        if(stristr($tespit2,"MSIE")) { $tarayici="Internet Explorer"; }
-        elseif(stristr($tespit2,"Opera")) { $tarayici="Opera"; }
-        elseif(stristr($tespit2,"Firefox")) { $tarayici="Mozilla Firefox"; }
-        elseif(stristr($tespit2,"YaBrowser")) { $tarayici="Yandex Browser"; }
-        elseif(stristr($tespit2,"Chrome")) { $tarayici="Google Chrome"; }
-        elseif(stristr($tespit2,"Safari")) { $tarayici="Safari"; }
-        else { $tarayici = "Not Found"; }
-        return $tarayici;
+        $user_agent=$_SERVER['HTTP_USER_AGENT'];
+        if(stristr($user_agent,"MSIE")) { $browser="Internet Explorer"; }
+        elseif(stristr($user_agent,"Opera")) { $browser="Opera"; }
+        elseif(stristr($user_agent,"Firefox")) { $browser="Mozilla Firefox"; }
+        elseif(stristr($user_agent,"YaBrowser")) { $browser="Yandex Browser"; }
+        elseif(stristr($user_agent,"Chrome")) { $browser="Google Chrome"; }
+        elseif(stristr($user_agent,"Safari")) { $browser="Safari"; }
+        else { $browser = "Not Found"; }
+        return $browser;
     }
 
-    function firstLetterUppercaseLetterTR($str) {
-
+    function firstLetterUppercaseLetterTR($str)
+    {
         $str = str_replace(array('i', 'ı', 'ü', 'ğ', 'ş', 'ö', 'ç'), array('İ', 'I', 'Ü', 'Ğ', 'Ş', 'Ö', 'Ç'), $str);
 
         return mb_strtoupper($str,"utf-8");
-
     }
 
-    function firstLetterUppercaseLetter($str) {
-
-        return strtoupper($str);
-
-    }
-
-    public function uppercaseLetter($gelen)
+    function firstLetterUppercaseLetter($str)
     {
-        $sonuc='';
-        $kelimeler=explode(" ", $gelen);
+        return strtoupper($str);
+    }
 
-        foreach ($kelimeler as $kelime_duz){
-
-            $kelime_uzunluk=strlen($kelime_duz);
-            $ilk_karakter=mb_substr($kelime_duz,0,1,'UTF-8');
-
-            if($ilk_karakter=='Ç' or $ilk_karakter=='ç'){
-                $ilk_karakter='Ç';
-            }elseif ($ilk_karakter=='Ğ' or $ilk_karakter=='ğ') {
-                $ilk_karakter='Ğ';
-            }elseif($ilk_karakter=='I' or $ilk_karakter=='ı'){
-                $ilk_karakter='I';
-            }elseif ($ilk_karakter=='İ' or $ilk_karakter=='i'){
-                $ilk_karakter='İ';
-            }elseif ($ilk_karakter=='Ö' or $ilk_karakter=='ö'){
-                $ilk_karakter='Ö';
-            }elseif ($ilk_karakter=='Ş' or $ilk_karakter=='ş'){
-                $ilk_karakter='Ş';
-            }elseif ($ilk_karakter=='Ü' or $ilk_karakter=='ü'){
-                $ilk_karakter='Ü';
-            }else{
-                $ilk_karakter=strtoupper($ilk_karakter);
-            }
-
-            $digerleri=mb_substr($kelime_duz,1,$kelime_uzunluk,'UTF-8');
-            $sonuc.=$ilk_karakter.$this->kucukHarf($digerleri).' ';
-
-        }
-
-        $son=trim(str_replace('  ', ' ', $sonuc));
-        return $son;
+    function upperCase($str)
+    {
+        return mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
     }
 
     public function lowerCase($str)
@@ -379,9 +345,9 @@ class Mi
         return mb_strtolower($str,"utf-8");;
     }
 
-    public function emailController($eposta)
+    public function emailController($email)
     {
-        if(filter_var($eposta, FILTER_VALIDATE_EMAIL) != '')
+        if(filter_var($email, FILTER_VALIDATE_EMAIL) != '')
             return true;
         else
             return false;
