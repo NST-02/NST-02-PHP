@@ -9,9 +9,9 @@ if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 
 class Home extends \Templates\MiPHP\Template
 {
-    public function __construct($Mi)
+    public function __construct()
     {
-        parent::__construct($Mi);
+        parent::__construct();
         $this->header();
         $this->content();
         $this->footer();

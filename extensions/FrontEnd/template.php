@@ -20,9 +20,9 @@ class Template extends \Extensions\Prepare
 
     protected $data;
 
-    public function __construct($Mi)
+    public function __construct()
     {
-        parent::__construct($Mi);
+        parent::__construct();
         $this->data = array();
     }
 

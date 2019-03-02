@@ -14,26 +14,30 @@ if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 
 class Index extends \Extensions\Prepare
 {
-    public function __construct($Mi)
+    public function __construct()
     {
-        parent::__construct($Mi);
+        parent::__construct();
         $this->connectDatabase();
     }
 
     public function connectDatabase()
     {
-        $database = (object)$this->mi->config['pdo'];
-        try {
-            $db = new \PDO('mysql:host='.$database->host.';dbname='.$database->dbname.';charset=utf8', $database->username, $database->password);
-        } catch ( \PDOException $e ){
-            die($this->mi->errorPage(array("Error Extensions\Mi\DatabasePDO\Index",$e->getMessage())));
-        }
+        $databases = (object)$this->mi->config['pdo'];
+        $db = array();
 
-        @$db->query("SET NAMES utf8");
-        @$db->query("SET NAMES 'UTF8'");
-        @$db->query("SET character_set_connection = 'UTF8'");
-        @$db->query("SET character_set_client = 'UTF8'");
-        @$db->query("SET character_set_results = 'UTF8'");
+        foreach ($databases as $i => $database) {
+            try {
+                $db[$i] = new \PDO('mysql:host=' . $database->host . ';dbname=' . $database->dbname . ';charset=utf8', $database->username, $database->password);
+            } catch (\PDOException $e) {
+                die($this->mi->errorPage(array("Error Extensions\Mi\DatabasePDO\Index", $e->getMessage())));
+            }
+
+            @$db[$i]->query("SET NAMES utf8");
+            @$db[$i]->query("SET NAMES 'UTF8'");
+            @$db[$i]->query("SET character_set_connection = 'UTF8'");
+            @$db[$i]->query("SET character_set_client = 'UTF8'");
+            @$db[$i]->query("SET character_set_results = 'UTF8'");
+        }
 
         return $db;
     }

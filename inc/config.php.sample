@@ -1,0 +1,29 @@
+<?php
+/*
+ * Config File
+ */
+
+if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
+
+$config = array(
+    'prefix' => 'https', /* https or http */
+    'wwwNecessity' => 0
+);
+
+/*
+ \Extensions\Mi\DatabasePDO\Index
+*/
+
+$config['pdo'] = array();
+$config['pdo'][] = array(
+    'host' => 'localhost',
+    'dbname' => '',
+    'username' => 'root',
+    'password' => ''
+);
+
+/*
+ \Extensions\Mi\FrontEnd\Template
+*/
+
+$config['adminslug'] = 'miadmin';

@@ -11,8 +11,9 @@ class Prepare
 {
     protected $mi;
 
-    public function __construct($Mi)
+    public function __construct()
     {
+        global $Mi;
         $this->mi = $Mi;
     }
 }

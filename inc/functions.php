@@ -2,7 +2,11 @@
 
 if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 
+// Error Reporting Level
+
 error_reporting(E_ALL ^ E_NOTICE ^E_WARNING);
+
+// Timezone Istanbul
 
 date_default_timezone_set('Europe/Istanbul');
 
@@ -12,22 +16,6 @@ $classesDir = array (
     __DIR__.'/../extensions/'
 );
 
-function includeExtensions($folder)
-{
-    foreach (glob("{$folder}/*.php") as $filename)
-    {
-        include($filename);
-    }
-    foreach (glob("{$folder}/*") as $dirname)
-    {
-        foreach (glob("{$dirname}/*.php") as $filename) {
-            include($filename);
-        }
-    }
-}
-
-includeExtensions(__DIR__.'/../extensions');
-
 // Main Class
 
 class Mi
@@ -35,7 +23,7 @@ class Mi
     public $s;
     public $site;
 
-    protected $config;
+    public $config;
     private $prefix;
     private $wwwNecessity;
 
@@ -46,6 +34,20 @@ class Mi
         $this->prefix = $config['prefix'];
         $this->wwwNecessity = $config['wwwNecessity'];
         $this->site = $this->prefix.'://'.$_SERVER["SERVER_NAME"];
+    }
+
+    public function includeExtensions($folder)
+    {
+        foreach (glob("{$folder}/*.php") as $filename)
+        {
+            include($filename);
+        }
+        foreach (glob("{$folder}/*") as $dirname)
+        {
+            foreach (glob("{$dirname}/*.php") as $filename) {
+                include($filename);
+            }
+        }
     }
 
     public function start()
@@ -377,5 +379,7 @@ class Mi
 include(__DIR__.'/config.php');
 
 $Mi = new Mi($config);
+
+$Mi->includeExtensions(__DIR__.'/../extensions');
 
 ?>

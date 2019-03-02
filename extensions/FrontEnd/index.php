@@ -14,9 +14,9 @@ if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 
 class Index extends \Extensions\Prepare
 {
-    public function __construct($Mi)
+    public function __construct()
     {
-        parent::__construct($Mi);
+        parent::__construct();
     }
 
     public function start()
