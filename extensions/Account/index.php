@@ -23,8 +23,11 @@ class Index extends \Extensions\Prepare
 
     public function start()
     {
-        if($_SESSION['sessioncode'] != '')
+        if($_SESSION['sessioncode'] != '' or ($_COOKIE['sessioncode'] != '' and $_COOKIE['sessionid'] != ''))
         {
+            if($_COOKIE['sessioncode'] != '' and $_COOKIE['sessionid'] != '' and $this->sessionControl() == false)
+                $this->signInCookie($_COOKIE['sessionid'],$_COOKIE['sessioncode']);
+
             $session = $this->sessionControl();
             if($session != false)
             {
@@ -34,6 +37,8 @@ class Index extends \Extensions\Prepare
                 return $user;
             } else {
                 $_SESSION['sessioncode'] = '';
+                setcookie("sessincode", "", time() - 3600);
+                setcookie("sessionid", "", time() - 3600);
                 return false;
             }
         }
@@ -69,7 +74,7 @@ class Index extends \Extensions\Prepare
             return false;
     }
 
-    public function signIn($id)
+    public function signIn($id,$rememberMe = 0)
     {
         $scode = $this->mi->random(200);
 
@@ -80,7 +85,37 @@ class Index extends \Extensions\Prepare
         $update->execute(array($this->mi->dateTime(),$this->mi->ipDetect(),$id));
 
         $_SESSION['sessioncode'] = $scode;
+
+        if($rememberMe == '1')
+        {
+            // 30 Days Cookie
+            setcookie("sessioncode", $scode, time() + (60*60*24*30));
+            setcookie("sessionid", $id, time() + (60*60*24*30));
+        }
+
         return true;
+    }
+
+    public function signInCookie($id,$code)
+    {
+        $query = $this->db->prepare("SELECT * FROM `sessionRecords` WHERE sessioncode=? and user=? and status='1'");
+        $query->execute(array($code,$id));
+        $query = $query->fetch(\PDO::FETCH_OBJ);
+
+        if($query->os == $this->mi->osDetect() and $query->browser == $this->mi->browserDetect()) {
+
+            $this->db->query("UPDATE `sessionRecords` SET status='0' WHERE id='$query->id'");
+            $scode = $code;
+
+            $query = $this->db->prepare("INSERT INTO `sessionRecords`(`user`, `os`, `browser`, `ip`, `date`, `sessioncode`) VALUES (?,?,?,?,?,?)");
+            $query->execute(array($id,$this->mi->osDetect(),$this->mi->browserDetect(),$this->mi->ipDetect(),$this->mi->dateTime(),$scode));
+
+            $update = $this->db->prepare("UPDATE `users` SET last_login=?, last_login_ip=? WHERE id=?");
+            $update->execute(array($this->mi->dateTime(),$this->mi->ipDetect(),$id));
+
+            $_SESSION['sessioncode'] = $scode;
+
+        } else return false;
     }
 
     public function signOut()
