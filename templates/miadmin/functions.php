@@ -1,18 +1,21 @@
 <?php
 /**
- * Example Templates - MiPHP
+ * Example Templates - MiPHP Admin
  */
 
-namespace Templates\MiPHP;
+namespace Templates\MiAdmin;
 
 if ($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 
 class Template extends \Extensions\Mi\FrontEnd\Template
 {
+    public $userC;
+
     public function __construct()
     {
         $this->dir = __DIR__ . '/';
         parent::__construct();
+        $this->userC = new \Extensions\Mi\Account\Index();
     }
 
     public function database()
@@ -34,16 +37,34 @@ $Template = new Template();
 
 $s = $this->mi->s;
 
+// User Information
+
+$user = $Template->userC->start();
+
 $this->getTemplateClasses($Template->phpDir);
 
-$pages = array(
-    '' => '\Home',
-    '404' => '\ThreeZeroThree'
-);
+if($user != false) {
+    $pages = array(
+        '' => '\Home',
+        '404' => '\ThreeZeroThree'
+    );
+} else {
+    $pages = array(
+        '' => '\Login',
+        '404' => '\ThreeZeroThree'
+    );
+}
 
-$pageClassName = '\Templates\MiPHP\Page' . $pages[@$s[0]];
+$pageClassName = '\Templates\MiAdmin\Page' . $pages[@$s[1]];
 
-if (@$pages[@$s[0]] == '') $pageClassName = '';
+if (@$pages[@$s[1]] == '') $pageClassName = '';
+
+if(@$s[1] == 'sign-out')
+{
+    $Template->userC->signOut();
+    header('Location: '.$this->mi->baseUrl('miadmin'));
+    die;
+}
 
 if (class_exists($pageClassName) and $pageClassName != '') {
     new $pageClassName();

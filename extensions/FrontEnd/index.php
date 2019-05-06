@@ -21,14 +21,23 @@ class Index extends \Extensions\Prepare
 
     public function start()
     {
-        $Mi = $this->mi;
-
-        $dir = __DIR__.'/../../templates/miphp/';
-        $file = $dir.'functions.php';
-
-        if(file_exists($file))
+        if($this->mi->s[0] == $this->mi->config['adminslug'])
         {
-            include($file);
+            $dir = $this->mi->baseDir . '/templates/miadmin/';
+            $file = $dir . 'functions.php';
+
+            if (file_exists($file)) {
+                include($file);
+            }
+        }
+        else
+        {
+            $dir = $this->mi->baseDir . '/templates/miphp/';
+            $file = $dir . 'functions.php';
+
+            if (file_exists($file)) {
+                include($file);
+            }
         }
     }
 

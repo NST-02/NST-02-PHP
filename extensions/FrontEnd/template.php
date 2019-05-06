@@ -15,8 +15,9 @@ if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
 class Template extends \Extensions\Prepare
 {
     public $dir;
-    public $phpdir;
-    public $assetsdir;
+    public $phpDir;
+    public $assetsDir;
+    public $assetsUri;
 
     protected $data;
 
@@ -24,6 +25,9 @@ class Template extends \Extensions\Prepare
     {
         parent::__construct();
         $this->data = array();
+        $this->phpDir = $this->dir . 'php/';
+        $this->assetsDir = $this->dir . 'assets/';
+        $this->assetsUri = $this->mi->site . str_replace($this->mi->baseDir, '', $this->assetsDir);
     }
 
     public function dataChange($data)
@@ -38,7 +42,7 @@ class Template extends \Extensions\Prepare
         $s = $this->mi->s;
         $data = $this->data;
 
-        include($this->phpdir.'inc/header.php');
+        include($this->phpDir.'inc/header.php');
     }
 
     public function footer()
@@ -48,6 +52,6 @@ class Template extends \Extensions\Prepare
         $s = $this->mi->s;
         $data = $this->data;
 
-        include($this->phpdir.'inc/footer.php');
+        include($this->phpDir.'inc/footer.php');
     }
 }

@@ -26,6 +26,7 @@ class Index extends \Extensions\Prepare
         $db = array();
 
         foreach ($databases as $i => $database) {
+            $database = (object)$database;
             try {
                 $db[$i] = new \PDO('mysql:host=' . $database->host . ';dbname=' . $database->dbname . ';charset=utf8', $database->username, $database->password);
             } catch (\PDOException $e) {
