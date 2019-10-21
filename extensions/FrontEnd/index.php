@@ -24,20 +24,28 @@ class MainFrontEnd extends Prepare
 
     public function start()
     {
-        if($this->mi->s[0] == $this->mi->config['adminslug']) {
-            $dir = $this->mi->baseDir . '/templates/miadmin/';
-            $file = $dir . 'functions.php';
+        if(!stristr($_SERVER["SERVER_NAME"], "www.") and $this->wwwNecessity == 1) {
+            header('Location: ' . $this->prefix . '://www.' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);
+        }
 
-            if(file_exists($file)) {
-                include($file);
-            }
-        } else {
-            $dir = $this->mi->baseDir . '/templates/miphp/';
-            $file = $dir . 'functions.php';
+        if(stristr($_SERVER["SERVER_NAME"], "www.") and $this->wwwNecessity != 1) {
+            header('Location: ' . $this->prefix . '://' . ltrim($_SERVER["SERVER_NAME"], 'www.') . $_SERVER["REQUEST_URI"]);
+        }
 
-            if(file_exists($file)) {
-                include($file);
-            }
+        define("PROTOCOL", isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : ((isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) ? 'https' : 'http'));
+
+        define("PROTOCOL2", isset($_SERVER['HTTP_SEC_FETCH_MODE']) ? 'https' : 'http');
+
+        if((PROTOCOL == 'https' or PROTOCOL2 == 'https') and $this->prefix == 'https') {
+            $url = $this->prefix . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            header("Location: $url");
+        }
+
+        $dir = $this->mi->baseDir . '/templates/nst/';
+        $file = $dir . 'functions.php';
+
+        if(file_exists($file)) {
+            include($file);
         }
     }
 
