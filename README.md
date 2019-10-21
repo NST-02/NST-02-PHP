@@ -1,2 +1,2 @@
-# MiPHP
-MiPHP yapısı, PHP kodlamayı kolaylaştırmak için hazırlanmış bir yapıdan ibarettir.
+# NTS-02-PHP
+github.com/mehmetizmirlioglu/miphp
