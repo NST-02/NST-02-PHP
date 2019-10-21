@@ -41,7 +41,7 @@ class MainFrontEnd extends Prepare
 
         define("PROTOCOL2", isset($_SERVER['HTTP_SEC_FETCH_MODE']) ? 'https' : 'http');
 
-        if((PROTOCOL == 'https' or PROTOCOL2 == 'https') and $this->prefix == 'https') {
+        if(!(PROTOCOL == 'https' or PROTOCOL2 == 'https') and $this->prefix == 'https') {
             $url = $this->prefix . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             header("Location: $url");
         }
