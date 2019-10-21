@@ -36,7 +36,7 @@ class Buton extends \Templates\MiAdmin\Template
 
     public function html()
     {
-        ?><form action="" method="POST"><input type="hidden" name="buton" value="1"> <button type="submit">Test Data</button> </form><form action="" method="POST"><input type="hidden" name="yesil" value="1"> <button type="submit">#1 için Yeşil Yap</button> </form> <?php
+        ?><meta name="viewport" content="width=device-width, initial-scale=1"><form action="" method="POST"><input type="hidden" name="buton" value="1"> <button type="submit">Test Data</button> </form><form action="" method="POST"><input type="hidden" name="yesil" value="1"> <button type="submit">#1 için Yeşil Yap</button> </form> <?php
     }
 
 }
