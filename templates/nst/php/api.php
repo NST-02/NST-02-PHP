@@ -21,7 +21,7 @@ class Api extends \Templates\MiAdmin\Template
 
     public function api()
     {
-        if($this->mi->s[1] == 'device') {
+        if($this->mi->s[1] == 'device' or $this->mi->s[1] == 'device2') {
             $id = intval($_POST['id']);
             $token = $_POST['token'];
             $data = $_POST['data'];
