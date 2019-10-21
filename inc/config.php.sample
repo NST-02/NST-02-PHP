@@ -3,7 +3,8 @@
  * Config File
  */
 
-if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
+if($_SERVER['PHP_SELF'] != '/index.php')
+    header('Location: /');
 
 $config = array(
     'prefix' => 'https', /* https or http */

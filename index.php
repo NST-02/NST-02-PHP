@@ -13,7 +13,8 @@ require __DIR__ . '/inc/functions.php';
 
 // Error Reporting Level
 
-error_reporting(E_ALL ^ E_NOTICE ^E_WARNING);
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+ini_set('error_reporting',1);
 
 // Timezone Istanbul
 
@@ -21,13 +22,13 @@ date_default_timezone_set('Europe/Istanbul');
 
 // Include Extensions
 
-$classesDir = array (
-    __DIR__.'/extensions/'
+$classesDir = array(
+    __DIR__ . '/extensions/'
 );
 
 // new Mi();
 
-include(__DIR__.'/inc/config.php');
+include(__DIR__ . '/inc/config.php');
 
 $config['baseDir'] = __DIR__;
 

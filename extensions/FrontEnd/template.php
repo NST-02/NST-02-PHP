@@ -10,9 +10,12 @@ Author URI: mehmetizmirlioglu.com.tr
 
 namespace Extensions\Mi\FrontEnd;
 
-if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
+use Extensions\Prepare;
 
-class Template extends \Extensions\Prepare
+if($_SERVER['PHP_SELF'] != '/index.php')
+    header('Location: /');
+
+class Template extends Prepare
 {
     public $dir;
     public $phpDir;
@@ -37,21 +40,11 @@ class Template extends \Extensions\Prepare
 
     public function header()
     {
-        $Mi = $this->mi;
-        $Template = $this;
-        $s = $this->mi->s;
-        $data = $this->data;
-
-        include($this->phpDir.'inc/header.php');
+        include($this->phpDir . 'inc/header.php');
     }
 
     public function footer()
     {
-        $Mi = $this->mi;
-        $Template = $this;
-        $s = $this->mi->s;
-        $data = $this->data;
-
-        include($this->phpDir.'inc/footer.php');
+        include($this->phpDir . 'inc/footer.php');
     }
 }

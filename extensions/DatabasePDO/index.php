@@ -8,11 +8,16 @@ Author: Mehmet İzmirlioğlu
 Author URI: mehmetizmirlioglu.com.tr
 */
 
-namespace Extensions\Mi\DatabasePDO;
+namespace Extensions\Mi;
 
-if($_SERVER['PHP_SELF'] != '/index.php') header('Location: /');
+use Extensions\Prepare;
+use PDO;
+use PDOException;
 
-class Index extends \Extensions\Prepare
+if($_SERVER['PHP_SELF'] != '/index.php')
+    header('Location: /');
+
+class DatabasePDO extends Prepare
 {
     public function __construct()
     {
@@ -25,12 +30,12 @@ class Index extends \Extensions\Prepare
         $databases = (object)$this->mi->config['pdo'];
         $db = array();
 
-        foreach ($databases as $i => $database) {
+        foreach($databases as $i => $database) {
             $database = (object)$database;
             try {
-                $db[$i] = new \PDO('mysql:host=' . $database->host . ';dbname=' . $database->dbname . ';charset=utf8', $database->username, $database->password);
-            } catch (\PDOException $e) {
-                die($this->mi->errorPage(array("Error Extensions\Mi\DatabasePDO\Index", $e->getMessage())));
+                $db[$i] = new PDO('mysql:host=' . $database->host . ';dbname=' . $database->dbname . ';charset=utf8', $database->username, $database->password);
+            } catch(PDOException $e) {
+                die($this->mi->errorPage(array("Error Extensions\Mi\DatabasePDO", $e->getMessage())));
             }
 
             @$db[$i]->query("SET NAMES utf8");
