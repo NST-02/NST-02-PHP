@@ -17,9 +17,14 @@ if($_SERVER['PHP_SELF'] != '/index.php')
 
 class MainFrontEnd extends Prepare
 {
+    private $prefix;
+    private $wwwNecessity;
+
     public function __construct()
     {
         parent::__construct();
+        $this->wwwNecessity = $this->mi->config['wwwNecessity'];
+        $this->prefix = $this->mi->config['prefix'];
     }
 
     public function start()
